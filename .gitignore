@@ -2,6 +2,5 @@ node_modules
 .env.development.local
 .env.production.local
 .env.test.local
-carts.json
-products.json
 files
+

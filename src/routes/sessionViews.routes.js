@@ -3,6 +3,7 @@ import authMdw from "../middleware/auth.middleware.js";
 import userModel from "../dao/models/user.model.js";
 import session from "express-session";
 import { API_VERSION } from "../config/config.js";
+import passport from "passport";
 
 
 class SessionViewsRoutes {
@@ -15,9 +16,9 @@ class SessionViewsRoutes {
   }
   initSessionViewsRoutes(){
     // ****** ruta directa
+
     this.router.get(`${this.path}`, async (req, res) =>{
       return res.redirect(`/api/${API_VERSION}/login`);
-
     })
     this.router.get(`${this.path}login`, async (req, res) =>{
       //algo
@@ -55,6 +56,10 @@ class SessionViewsRoutes {
       }catch(error){
         console.log("🚀 ~ file: sessionViews.routes.js:50 ~ SessionViewsRoutes ~ this.router.get ~ error:", error)
       }
+    })
+
+    this.router.get(`${this.path}recover`, async (req,res)=>{
+      res.render("recover");
     })
   }
 }

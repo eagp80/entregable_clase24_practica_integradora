@@ -16,6 +16,8 @@ const {
   DB_USER,
   DB_PASSWORD,
   CURSO,
+  GITHUB_CLIENT_ID,  
+  GITHUB_CLIENT_SECRET,  
 } = process.env;
 
 export {
@@ -30,4 +32,6 @@ export {
   DB_USER,
   DB_PASSWORD,
   CURSO,
+  GITHUB_CLIENT_ID,  
+  GITHUB_CLIENT_SECRET, 
 };

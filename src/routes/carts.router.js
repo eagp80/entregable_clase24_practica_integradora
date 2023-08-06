@@ -2,7 +2,7 @@ import {Router} from "express";
 import uploader from "../services/uploader.js";
 import CartManager from "../dao/managers/cartManager.js";
 
-const cartManager = new CartManager("./carts.json");
+const cartManager = new CartManager("files/carts.json");
 const carts =cartManager.getCarts();
 cartManager.carts=carts;
 

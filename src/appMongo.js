@@ -8,6 +8,8 @@ import __dirname from './utils.js'
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import mongoStore from "connect-mongo";
+import passport from "passport";
+import initializePassport from "./config/passport.config.js";
 
 
 class AppMongo {
@@ -57,13 +59,17 @@ class AppMongo {
           mongoUrl: DB_CNN,
           mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
           //ttl: 120,
-          ttl: 60 * 3600
+          ttl: 120
         }),
         secret: "secretS3ss10n",
         resave: false,
         saveUninitialized: false,
       })
-    )
+    );
+    initializePassport();
+    this.appMongo.use(passport.initialize());
+    this.appMongo.use(passport.session());
+
   }
 
   /**

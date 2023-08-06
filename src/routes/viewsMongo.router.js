@@ -21,21 +21,6 @@ class ViewsMongoRoutes {
 
   initViewsMongoRoutes() {
 
-    //esto se usaba en una implementacion anterior, una vista simple
-    // this.router.get(`${this.path}/productsmongo2`, async (req, res) => {
-    //   // let students = [
-    //   //   { name: "prueba", lastName: "apellidoPrueba", dni: "12345678" },
-    //   // ];
-    //   const productsMongo = await this.productMongoManager.getAllProductsMongo();
-    //   const mappedProductsMongo = productsMongo.map((p) => {
-    //     return {
-    //       title: p.title,
-    //       price: p.price,
-    //     };
-    //   });
-    //   res.render("productsMongo2", { productsMongo: mappedProductsMongo });
-    // });
-
     /*************************************************************************************
     //*************************************************************************************
     //********** Vista de todos los carritos  *************************************
@@ -164,33 +149,19 @@ class ViewsMongoRoutes {
             url1 = `http://localhost:${PORT}/api/${API_VERSION}/views/products?limit=${limit}&page=${prevPage}&sort=${sort}&query=${qStringURI}`
             url2 = `http://localhost:${PORT}/api/${API_VERSION}/views/products?limit=${limit}&page=${nextPage}&sort=${sort}&query=${qStringURI}`
         }
-        //  const aux = 
-        //  await productMongoModel.paginate(q, {limit, page, sort:s, lean:true});
-        //  console.log(aux); //esto era para ver que llegaba de mongo atlas.
-        
-        // docs.forEach(element => {//algunos documentos no tenian el status:true, luego se lo coloqué
-        //   if (element.status === false) {
-        //     element.status = "false"
-        //   } else {
-        //     element.status = "true"
-        //   }
-        //   //console.log("element.status");//para verificar si a los status:undefined se pasaban a true
-        //   //console.log(element.status);
-        // });
-        
-        //console.log("docs");//para verificar si a docs se le colocaba status: true
-        //console.log(docs);
-      console.log(req.session);
-      if (req.session.user._doc.email === "adminCoder@coder.com") {
-        req.session.user._doc.rol="admin"
-      }else{ req.session.user._doc.rol="user"}
+
+      if (req.session.user?.email === "adminCoder@coder.com") {
+        console.log(req.session);
+        req.session.user.rol="admin";
+      }else{ req.session.user.rol = "user" }
 
         res.render("products", {
-          rol: req.session?.user?._doc.rol,
-          first_name: req.session?.user?._doc.first_name,
-          last_name: req.session?.user?._doc.last_name,
-          email: req.session?.user?._doc.email,
-          age: req.session?.user?._doc.age,
+          rol: req.session?.user?.rol,
+          name: req.session?.user?.name,
+          first_name: req.session?.user?.first_name,
+          last_name: req.session?.user?.last_name,
+          email: req.session?.user?.email,
+          age: req.session?.user?.age,
           payload: docs,
           totalPages: totalPages,
           prevPage: prevPage,

@@ -1,7 +1,7 @@
 import {Router} from "express";
 import uploader from "../services/uploader.js";//salgo atras de routes y entro a services
 import ProductManager from '../dao/managers/productManager.js'//salgo de routes y estare en src
-const productManager = new ProductManager("./products.json");//instancia vacia
+const productManager = new ProductManager("files/products.json");//instancia vacia
 
 const products =productManager.getProducts();//cargo los productos actuales del archivo
 productManager.products=products;//refrescamiento en caso de reinicio del servidor
