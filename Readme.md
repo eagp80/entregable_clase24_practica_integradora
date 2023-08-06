@@ -21,47 +21,33 @@
         Para la paginación desde mongo atlas con limit, sort y query (método GET):
         http://localhost:8000/api/v1/views/products?page=1&limit=3&sort={"code":1}&query={"description": "Desde fromulario con socket"}
 ## Consigna. Se está requiriendo lo siguiente:
-- Deberá contar con todas las vistas realizadas en el hands on lab, así también como las rutas de router para procesar el registro y el login. ((Hecho)).
+- Continuar sobre el proyecto que has trabajado para tu ecommerce y configurar los siguientes elementos:
 
-- Una vez completado el login, realizar la redirección directamente a la vista de productos.((Hecho)).
+- Aspectos a incluir:
 
-- Agregar a la vista de productos un mensaje de bienvenida con los datos del usuario.((Hecho)).
+    - Crear un modelo User el cual contará con los campos:
+        - first_name:String,
+        - last_name:String,
+        - email:String (único)
+        - age:Number,
+        - password:String(Hash)
+        - cart:Id con referencia a Carts
+        - role:String(default:’user’)
+    - Desarrollar las estrategias de Passport para que funcionen con este modelo de usuarios.
+    - Modificar el sistema de login del usuario para poder trabajar con session o con jwt (a tu elección). 
+    - (Sólo para jwt) desarrollar una estrategia “current” para extraer la cookie que contiene el token para obtener el usuario asociado a dicho token, en caso de tener el token, devolver al usuario asociado al token, caso contrario devolver un error de passport, utilizar un extractor de cookie.
+    - Agregar al router /api/sessions/ la ruta /current, la cual utilizará el modelo de sesión que estés utilizando, para poder devolver en una respuesta el usuario actual.
 
-- Agregar un sistema de roles, de manera que si colocamos en el login como correo adminCoder@coder.com, y la contraseña adminCod3r123, el usuario de la sesión además tenga un campo.((Hecho)).
 
-- Todos los usuarios que no sean admin deberán contar con un rol “usuario”. ((Hecho)).
-
-- Implementar botón de “logout” para destruir la sesión y redirigir a la vista de login.((Hecho)).
 ### TESTEO:
-- Al cargar el proyecto, éste deberá comenzar en la pantalla de login.((Hecho)).
-
-- Al no tener un usuario, primero se creará un usuario, para esto, la pantalla de login deberá tener un link de redirección “Regístrate” .((Hecho)).
-
-- El proceso de registro deberá guardar en la base de datos al usuario.((Hecho)).
-
-- Se regresará al proceso de login y se colocarán las credenciales de manera incorrecta, esto para probar que no se pueda avanzar a la siguiente pantalla.((Hecho)).
-
-- Posteriormente, se colocarán las credenciales de manera correcta, esto para corroborar que se cree una sesión correctamente y que se haga una redirección a la vista de productos.((Hecho)).
-
-- La vista de productos tendrá en una parte de arriba de la página el mensaje “Bienvenido” seguido de los datos del usuario que se haya logueado (NO mostrar password). ((Hecho)).
-
-- Es importante que se visualice el “rol” para ver que aparezca “usuario” o “user”.((Hecho)).
-
-- Se presionará el botón de logout y se destruirá la sesión, notando cómo nos redirige a login.((Hecho)).
-
-- Se ingresarán las credenciales específicas de admin indicadas en las diapositivas, el login debe redirigir correctamente y mostrar en los datos del rol: “admin” haciendo referencia a la correcta gestión de roles.((Hecho)). 
-
-- Se revisará que el admin NO viva en base de datos, sino que sea una validación que se haga de manera interna en el código. ((Hecho)).
-
+- 
 
 ### Formato
 
 - Link al repositorio de Github con el proyecto completo, sin la carpeta de node_modules. ((Hecho)).
 
 ### Sugerencias
-- Recuerda que las vistas son importantes, más no el diseño, concéntrate en la funcionalidad de las sesiones antes que en la presentación.
-
-- Cuida las redirecciones a las múltiples vistas.
+- Te recomendamos trabajar con el modelo de sesión con el cual te sientas más cómodo (sessions / jwt).
 
 
 # **Checklist  ENTREGA ANTERIOR Segunda Pre-entrega del proyecto final**		
