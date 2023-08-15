@@ -2,6 +2,7 @@
 import express from "express";
 import {Server} from 'socket.io';
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 //const cors = require("cors");
 import { NODE_ENV, PORT, API_VERSION, CURSO } from "./config/config.js";
@@ -17,6 +18,7 @@ import ProductsMongoRoute from './routes/productsMongo.router.js';
 import CartsMongoRoute from './routes/cartsMongo.router.js';
 import SessionRoutes from "./routes/session.routes.js";//OJO
 import SessionViewsRoutes from "./routes/sessionViews.routes.js";//OJO
+import UserRoutes from "./routes/user.routes.js"
 
 import displayRoutes from "express-routemap";
 import __dirname from './utils.js'
@@ -29,6 +31,7 @@ const appMongo = new AppMongo([
        new ViewsMongoRoutes(),//ojo
        new SessionViewsRoutes(),
        new SessionRoutes(),
+       new UserRoutes(),
      ]);
      
 appMongo.listen();
@@ -40,6 +43,8 @@ app.use(express.json()); //permite leer json en las peticiones (en req.body)
 //middlewar intercepta la peticion verifica si esta en json, covierte y continua
 app.use(express.urlencoded({extended:true}));// permite tener el objeto codificado desde url (formularios)
 //middlewar intercepta que este codificada desde una url si no continua
+app.use(cookieParser());
+
 app.use(express.static(`${__dirname}/public`));//lo que estara disponible, publico
 
 //app.use('/api/products',productsRouter);//al llegar la ruta especificada lo procesa con productsRouter

@@ -4,6 +4,8 @@ import session from "express-session";
 import { API_VERSION } from "../config/config.js";
 import { createHashValue, isValidPasswd } from "../utils/encrypt.js";
 import passport from "passport";
+import { generateJWT } from "../utils/jwt.js";
+
 //********* /api/v1/session/
 
 class SessionRoutes {//no es un Router pero adentro tiene uno
@@ -57,14 +59,34 @@ class SessionRoutes {//no es un Router pero adentro tiene uno
             .send({status: "error",  error: "Incorrect password" });
         };
     
-        const a = {
+        const a = {          
           ...findUser, // estraigo todo propiedad por propiedad
           password: "***", //borro password en la session no en la base de datos
         };
         req.session.user=a._doc; //se hace asi porque los tres puntitos traen un monton de info incluyendo objeto _doc donde viene el user
-      
-
-        return res.redirect(`../views/products`)//************ */
+        
+        const signUser = {
+          email,
+          role: findUser.role,
+          id: findUser._id,
+        };
+    
+        const token = await generateJWT({ ...signUser });
+        console.log(
+          "🚀 ~ file: session.routes.js:43 ~ router.post ~ token:",
+          token
+        );
+    
+        req.user = {
+          ...signUser,
+        };
+        console.log(req.user);
+        // TODO: RESPUESTA DEL TOKEN ALMACENADO EN AL COOKIE
+        // res.cookie("token", token, { maxAge: 1000000, httpOnly: true });
+        // return res.send("login sucess");
+    
+        return res.json({ message: `welcome $${email},login success`, token });//para postman
+        return res.redirect(`../views/products`)//*****activatr este depues***/
     
         return res.render("profile", {//OJO OJO OJO
           last_name: req.session?.user?.last_name || findUser.last_name,

@@ -5,6 +5,16 @@ import GithubStrategy from "passport-github2";
 import userModel  from "../dao/models/user.model.js";
 import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET} from "./config.js"
 import { createHashValue, isValidPasswd } from "../utils/encrypt.js";
+import jwt from "passport-jwt";
+import ROLES from "../constantes/role.js";
+import { SECRET_JWT, cookieExtractor } from "../utils/jwt.js";
+
+
+const JWTStrategy = jwt.Strategy;
+const ExtractJWT = jwt.ExtractJwt;
+
+
+
 
 const LocalStrategy =local.Strategy;
 
@@ -15,6 +25,7 @@ const initializePassport = () => {
       console.log("entre a registerpasssport");
       console.log(req.body);
       const {first_name, last_name, email,age} = req.body;
+      const role= 'user';
       try {
         let user = await userModel.findOne({email:username});
         if(user){
@@ -26,8 +37,9 @@ const initializePassport = () => {
           last_name,
           email,
           age,
-          password: await createHashValue(password)
-        }
+          password: await createHashValue(password),
+          role,
+        };
         let result = await userModel.create(newUser);
         return done(null,result);
         
@@ -61,6 +73,7 @@ const initializePassport = () => {
               email: profile._json?.email,
               age: 0,
               password: "",
+              role: "user",
             };
             let newUser = await userModel.create(addNewUser);
             done(null, newUser);
@@ -70,6 +83,31 @@ const initializePassport = () => {
 
             done(null, user);
           }
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
+
+  passport.use(
+    "jwt",
+    new JWTStrategy(
+      {
+        // jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(), // Bearer atokenaskjehbdkajdhkahdka
+        secretOrKey: SECRET_JWT,
+      },
+      async (jwtPayload, done) => {
+        console.log(
+          "🚀 ~ file: passport.config.js:20 ~ jwtPayload:",
+          jwtPayload
+        );
+        try {
+          if (ROLES.includes(jwtPayload.role)) {
+            return done(null, jwtPayload);
+          }
+          return done(null, jwtPayload);
         } catch (error) {
           return done(error);
         }

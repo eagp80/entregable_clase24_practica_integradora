@@ -3,7 +3,7 @@ import CartsMongoManager from "../dao/managers/cartMongo.manager.js";
 import ProductsMongoManager from "../dao/managers/productMongo.manager.js";
 import productMongoModel from "../dao/models/productsMongo.models.js";
 import { NODE_ENV, PORT, API_VERSION, CURSO } from "../config/config.js";
-import authMdw from "../middleware/auth.middleware.js";
+import authMdw from "../middleware/authorization.middleware.js";
 
 
 
@@ -13,7 +13,7 @@ class ViewsMongoRoutes {
   router = Router();
   productMongoManager = new ProductsMongoManager();
   cartsMongoManager = new CartsMongoManager();
-  rol="user";
+  role="USER";
 
   constructor() {
     this.initViewsMongoRoutes();
@@ -59,6 +59,7 @@ class ViewsMongoRoutes {
     //******  GET DE /api/v1/views/carts/:cid **************************************
     //*************************************************************************************
     //*************************************************************************************
+    
     this.router.get(`${this.path}/carts/:cid`, async (req, res) => {
       try {
         // TODO: HACER VALIDACIONES *
@@ -105,7 +106,7 @@ class ViewsMongoRoutes {
    //*******************Vista de productos con paginacion*************************** */
    //******************************************************************************* */
    //******************************************************************************* */
-    this.router.get(`${this.path}/products`,authMdw, async (req, res) => {
+    this.router.get(`${this.path}/products`,authMdw("USER"), async (req, res) => {//
       try {
         const { page = 1, limit = 10, query, sort } = req.query;
         let q = {};
@@ -185,6 +186,9 @@ class ViewsMongoRoutes {
           error
         );
       }
+    });
+    this.router.get(`${this.path}/*`, async (req,res)=>{
+      res.status(404).send('Error: algo mal en la ruta escrita');
     })
   }
 }

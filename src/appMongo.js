@@ -58,7 +58,6 @@ class AppMongo {
         store: mongoStore.create({
           mongoUrl: DB_CNN,
           mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-          //ttl: 120,
           ttl: 120
         }),
         secret: "secretS3ss10n",

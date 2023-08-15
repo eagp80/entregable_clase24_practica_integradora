@@ -1,5 +1,5 @@
 import { Router } from "express";
-import authMdw from "../middleware/auth.middleware.js";
+import authMdw from "../middleware/authorization.middleware.js";
 import userModel from "../dao/models/user.model.js";
 import session from "express-session";
 import { API_VERSION } from "../config/config.js";
