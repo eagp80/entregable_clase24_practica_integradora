@@ -2,7 +2,7 @@
  ### Dudas al whatsapp +573158680076.
 # PRACTICA INTREGRADORA... CLASE 24
 ###  RUTAS
-        - Ruta de inicio, de entrada a la api: 
+        - Ruta de inicio, de entrada a la api (redirige al login): 
         http://localhost:8000/api/v1/
 
         - Ruta de usuario actual logueado:
@@ -19,7 +19,7 @@
 <h2> Ruta de inicio, de entrada a la api:  http://localhost:8000/api/v1/  la cual redirige al login </h2>
 
  <h2>Ejemplos de rutas:</h2>
-        Ruta de inicio, de entrada a la api: 
+        Ruta de inicio, de entrada a la api (redirige al login): 
         http://localhost:8000/api/v1/
 
         Ruta de usuario actual logueado:
