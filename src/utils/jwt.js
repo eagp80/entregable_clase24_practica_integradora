@@ -15,7 +15,7 @@ const generateJWT = (user) => {
   });
 };
 
-const cookieExtractor = () => {
+const cookieExtractor = (req) => {
   let token = null;
   if (req && req.cookies) {
     token = req.cookies["token"];
@@ -32,7 +32,7 @@ const passportCall = (strategy) => {
       if (!user) {
         return res.status(401).json({
           error: info.messages ? info.messages : info.toString(),
-          message: `error in jwt`,//ojo
+          message: `error in jwt`,//ojo...
         });
       }
       req.user = user;

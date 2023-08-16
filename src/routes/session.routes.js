@@ -6,6 +6,12 @@ import { createHashValue, isValidPasswd } from "../utils/encrypt.js";
 import passport from "passport";
 import { generateJWT } from "../utils/jwt.js";
 
+import { passportCall } from "../utils/jwt.js";
+import authorization from "../middleware/authorization.middleware.js";
+import handlePolicies from "../middleware/handle-policies.middleware.js";
+
+
+
 //********* /api/v1/session/
 
 class SessionRoutes {//no es un Router pero adentro tiene uno
@@ -18,12 +24,37 @@ class SessionRoutes {//no es un Router pero adentro tiene uno
   }
 
   initSessionRoutes() {//  api/v1/session/logout
+    this.router.get(`${this.path}/current`, 
+    [passportCall("jwt"), handlePolicies(["USER","ADMIN"])],
+    async (req, res) =>{
+      return res.send(req.user);
+    });
+
+    this.router.get(`${this.path}/current/:uid`, 
+    [passportCall("jwt"), 
+    handlePolicies(["USER", "ADMIN", "GOLD", "SILVER", "BRONCE"])],
+    async (req, res) =>{
+      try{
+        const { uid } = req.params;
+        const user = await userModel.findById(uid);
+    
+        if (!user) {
+          return res.status(404).json({
+            message: `user ${uid} info not found`,
+          });
+        }        
+        return res.json({ message: "user info", user });
+      } catch (error) {
+      console.log("🚀 ~ file: session.routes.js:48 ~ SessionRoutes ~ error:", error)
+      } 
+    });
+
     this.router.get(`${this.path}/logout`, async (req, res) =>{
       
       try{
         //algo
           console.log("haciendo logout");
-          req.session.destroy((err) => {
+          req.session.destroy((err) => {//cambiar esto para trabajar con token y cookie
           if (!err) return res.redirect(`../login`);
           return res.send({ message: `logout Error`, body: err });
         });
@@ -59,12 +90,11 @@ class SessionRoutes {//no es un Router pero adentro tiene uno
             .send({status: "error",  error: "Incorrect password" });
         };
     
-        const a = {          
-          ...findUser, // estraigo todo propiedad por propiedad
-          password: "***", //borro password en la session no en la base de datos
-        };
-        req.session.user=a._doc; //se hace asi porque los tres puntitos traen un monton de info incluyendo objeto _doc donde viene el user
-        
+        // const a = {          
+        //   ...findUser, // estraigo todo propiedad por propiedad
+        //   password: "***", //borro password en la session no en la base de datos
+        // };
+        //req.session.user=a._doc; //se hace asi porque los tres puntitos traen un monton de info incluyendo objeto _doc donde viene el user
         const signUser = {
           email,
           role: findUser.role,
@@ -82,8 +112,8 @@ class SessionRoutes {//no es un Router pero adentro tiene uno
         };
         console.log(req.user);
         // TODO: RESPUESTA DEL TOKEN ALMACENADO EN AL COOKIE
-        // res.cookie("token", token, { maxAge: 1000000, httpOnly: true });
-        // return res.send("login sucess");
+         res.cookie("token", token, { maxAge: 1000000, httpOnly: true });
+        return res.send("login sucess with jwt and cookie");
     
         return res.json({ message: `welcome $${email},login success`, token });//para postman
         return res.redirect(`../views/products`)//*****activatr este depues***/
@@ -133,8 +163,6 @@ class SessionRoutes {//no es un Router pero adentro tiene uno
       res.send({error:"Failed register with passport"});
     })
 
-
-
     this.router.get(`${this.path}/github`,passport.authenticate("github",{scope:['user:email']}), async (req, res) =>{
       
     });
@@ -143,7 +171,9 @@ class SessionRoutes {//no es un Router pero adentro tiene uno
       req.session.user=req.user;
       console.log("entre a github/callback");
       console.log(req.user);
-      res.redirect(`../views/products`);
+      res.send("login correct with github");
+
+      //res.redirect(`../views/products`);
     })
 
   

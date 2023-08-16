@@ -3,11 +3,11 @@ import { API_VERSION } from "../config/config.js";
 const authorization = (role) => {
   return async (req, res, next) => {
     console.log(
-      "🚀 ~ file: authorization.middleware.js:9 ~ return ~ req.session.user.role:",
-      req.user.role
+      "🚀 ~ file: authorization.middleware.js:9 ~ return ~ req.user.user.role:",
+      req.user.user.role
     );
-    if (!req.session.user) return res.status(401).json({ message: `Unauthorized` });
-    if (req.session.user.role != role)
+    if (!req.user.user) return res.status(401).json({ message: `Unauthorized` });
+    if (req.user.user.role != role)
       return res.status(401).json({ message: "No enought permissions" });
 
     next();

@@ -22,10 +22,10 @@ const initializePassport = () => {
 
   passport.use('registerpassport', new LocalStrategy(
     {passReqToCallback:true, usernameField:'email'}, async (req,username,password,done)=>{
-      console.log("entre a registerpasssport");
+      console.log("entre a registerpassport");
       console.log(req.body);
       const {first_name, last_name, email,age} = req.body;
-      const role= 'user';
+      const role= 'USER';
       try {
         let user = await userModel.findOne({email:username});
         if(user){
@@ -73,7 +73,7 @@ const initializePassport = () => {
               email: profile._json?.email,
               age: 0,
               password: "",
-              role: "user",
+              role: "USER",
             };
             let newUser = await userModel.create(addNewUser);
             done(null, newUser);
@@ -94,8 +94,8 @@ const initializePassport = () => {
     "jwt",
     new JWTStrategy(
       {
-        // jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(), // Bearer atokenaskjehbdkajdhkahdka
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        //jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(), // Bearer atokenaskjehbdkajdhkahdka
         secretOrKey: SECRET_JWT,
       },
       async (jwtPayload, done) => {
