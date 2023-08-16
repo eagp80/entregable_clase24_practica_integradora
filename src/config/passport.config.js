@@ -59,7 +59,6 @@ const initializePassport = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          console.log("PROFILE INFO ******", profile);
           if(profile._json?.email===null){profile._json.email=profile._json?.url}
           //validar si email es null cambiar email:login o email o url o html_url 
           let user = await userModel.findOne({ email: profile._json?.email });
