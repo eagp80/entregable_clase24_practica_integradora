@@ -3,7 +3,9 @@ import CartsMongoManager from "../dao/managers/cartMongo.manager.js";
 import ProductsMongoManager from "../dao/managers/productMongo.manager.js";
 import productMongoModel from "../dao/models/productsMongo.models.js";
 import { NODE_ENV, PORT, API_VERSION, CURSO } from "../config/config.js";
-import authMdw from "../middleware/authorization.middleware.js";
+import { passportCall } from "../utils/jwt.js";
+import authorization from "../middleware/authorization.middleware.js";
+import handlePolicies from "../middleware/handle-policies.middleware.js";
 
 
 
@@ -106,7 +108,10 @@ class ViewsMongoRoutes {
    //*******************Vista de productos con paginacion*************************** */
    //******************************************************************************* */
    //******************************************************************************* */
-    this.router.get(`${this.path}/products`,authMdw("USER"), async (req, res) => {//
+    this.router.get(`${this.path}/products`,
+    [passportCall("jwt"), 
+    handlePolicies(["USER", "ADMIN", "GOLD", "SILVER", "BRONCE"])], 
+    async (req, res) => {//
       try {
         const { page = 1, limit = 10, query, sort } = req.query;
         let q = {};
@@ -153,8 +158,8 @@ class ViewsMongoRoutes {
 
       if (req.session.user?.email === "adminCoder@coder.com") {
         console.log(req.session);
-        req.session.user.rol="admin";
-      }else{ req.session.user.rol = "user" }
+        req.user.role="ADMIN";
+      }else{ req.user.role = "USER" }
 
         res.render("products", {
           rol: req.session?.user?.rol,
