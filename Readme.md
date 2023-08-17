@@ -1,22 +1,23 @@
 
  ### Dudas al whatsapp +573158680076.
-# PRACTICA INTREGRADORA... CLASE 24
+# DESAFÍO COMPLEMENTARIO ASIGNADO EN CLASE 24 (PRACTICA INTREGRADORA)
 ###  RUTAS
         - Ruta de inicio, de entrada a la api (redirige al login): 
         http://localhost:8000/api/v1/
 
-        - Ruta de usuario actual logueado:
+        - Ruta de usuario actual logueado (muestra usuario examinando token):
         http://localhost:8000/api/v1/session/current
 
-        - Ruta de usuario actual logueado por id:
+        - Ruta de usuario actual logueado por id (muestra usuario examinando BD en Mongo Atlas):
         http://localhost:8000/api/v1/session/current/:uid
 
 ###  SERVIDOR DE PRODUCTOS Y CARRITOS CON EXPRESS, VISTAS CON EXPRESS-HANDLEBARS, BASE DE DATOS MANEJADA CON MONGOOSE HACIA MONGO ATLAS (PRONTO TENDRÁ WEBSOCKET PARA CHAT CON SOCKETS.IO). 
 ### ADEMÁS TIENE: MANEJO DE VARIABLES DE ENTORNO CON dotenv CAMBIO DE VARIABLES DE ENTORNO DURANTE EJECUCIÓN CON cross-env, SE MUESTRAN RUTAS EN TABLA EN CONSOLA LADO BACKEND CON express-routemap, (PRONTO TENDRÁ MANEJO DE ARCHIVOS CON MULTER).
-### CORRESPODE A PRACTICA INTEGRADORA DE CLASE 24.
+### CORRESPODE A DESAFÍO COMPLEMENTARIO ASIGNADO EN CLASE 24 (PRACTICA INTREGRADORA)
 ...
 ### Como usar la app:
-<h2> Ruta de inicio, de entrada a la api:  http://localhost:8000/api/v1/  la cual redirige al login </h2>
+<h2> Ruta de inicio, de entrada a la api:   </h2>
+<h4> http://localhost:8000/api/v1/  la cual redirige al login </h4>
 
  <h2>Ejemplos de rutas:</h2>
         Ruta de inicio, de entrada a la api (redirige al login): 
