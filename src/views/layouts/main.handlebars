@@ -9,17 +9,28 @@
     <body>
         <h3>Ejemplos de rutas para trabajar con Mongo:</h3>
 
-        <p>Para obtener todos los productos detalladamente en formato JSON con método GET: </p>
-        <p>*http://localhost:8000/api/v1/products/</p>
+           <p>Ruta de inicio, de entrada a la api (redirige al login): 
+            *********** http://localhost:8000/api/v1/ </p> 
 
-        <p>Para ver resumen de todos los carritos con método GET</p>
-        <p>*http://localhost:8000/api/v1/views/carts/</p>
+            <p>Ruta de usuario actual logueado (muestra usuario examinando token):
+            *********** http://localhost:8000/api/v1/session/current</p>
 
-        <p> Para ver paginación de productos desde mongo atlas con page, limit, sort y query (método GET), ejemplo: </p>
-        <p>*http://localhost:8000/api/v1/views/products?page=1&limit=3&sort={"code":1}&query={"description": "Desde fromulario con socket"}</p>
+            <p>Ruta de usuario actual logueado por id (muestra usuario examinando BD en Mongo Atlas):
+            *********** http://localhost:8000/api/v1/session/current/:uid</p>
 
-        <p>Ejemplo para vista de todos los productos de un carrito por cid dado: <p>
-        </p>*http://localhost:8000/api/v1/views/carts/649dd00d2f44220462505662</p>
+    
+
+        <p>Para obtener todos los productos detalladamente en formato JSON con método GET:
+            ************ http://localhost:8000/api/v1/products/</p>
+
+        <p>Para ver resumen de todos los carritos con método GET: 
+            ************ http://localhost:8000/api/v1/views/carts/</p>
+
+        <p> Para ver paginación de productos desde mongo atlas con page, limit, sort y query (método GET), ejemplo: 
+            ************ http://localhost:8000/api/v1/views/products?page=1&limit=3&sort={"code":1}&query={"description": "Desde fromulario con socket"}</p>
+
+        <p>Ejemplo para vista de todos los productos de un carrito por cid dado: 
+            ************ http://localhost:8000/api/v1/views/carts/649dd00d2f44220462505662<p>
         {{{body}}}
 
     </body>
