@@ -169,8 +169,21 @@ class SessionRoutes {//no es un Router pero adentro tiene uno
 
     this.router.get(`${this.path}/githubcallback`, passport.authenticate('github',{failureRedirect:'/api/v1/login'}), async (req,res)=>{
       req.session.user=req.user;
+      req.user.user=req.user;
       console.log("entre a github/callback");
       console.log(req.user);
+      let email = req.user.email;
+      const findUser = await userModel.findOne({ email });
+
+      const signUser = {
+        email,
+        role: findUser.role,
+        id: findUser._id,
+      };
+      const token = await generateJWT({ ...signUser });
+
+      res.cookie("token", token, { maxAge: 1000000, httpOnly: true });
+
       res.send("login correct with github");
 
       //res.redirect(`../views/products`);

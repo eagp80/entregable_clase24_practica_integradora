@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import passport from "passport";
+import { SECRET_JWT } from "../config/config.js";
 
-const SECRET_JWT = "CLAVEs3p3rs3cr3t4S1s1";
 
 const generateJWT = (user) => {
   return new Promise((resolve, reject) => {
@@ -26,13 +26,13 @@ const cookieExtractor = (req) => {
 
 const passportCall = (strategy) => {
   return async (req, res, next) => {
-    passport.authenticate(strategy, function (err, user, info) {
+    passport.authenticate(strategy, { session: false }, function (err, user, info) {
       if (err) return next(err);
 
       if (!user) {
         return res.status(401).json({
           error: info.messages ? info.messages : info.toString(),
-          message: `error in jwt`,//ojo...
+          message: `error in jwt***`,//ojo...
         });
       }
       req.user = user;

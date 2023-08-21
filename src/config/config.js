@@ -18,6 +18,7 @@ const {
   CURSO,
   GITHUB_CLIENT_ID,  
   GITHUB_CLIENT_SECRET,  
+  SECRET_JWT,
 } = process.env;
 
 export {
@@ -34,4 +35,6 @@ export {
   CURSO,
   GITHUB_CLIENT_ID,  
   GITHUB_CLIENT_SECRET, 
+  SECRET_JWT,
+
 };
