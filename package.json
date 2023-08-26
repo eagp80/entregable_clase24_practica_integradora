@@ -10,6 +10,7 @@
     "dev": "nodemon cross-env NODE_ENV=development ./src/app.js",
     "start": "node ./src/app.js",
     "start:dev": "cross-env NODE_ENV=development nodemon ./src/app.js",
+    "start:dock": "cross-env NODE_ENV=docker nodemon ./src/app.js",
     "start:prod": "cross-env NODE_ENV=production nodemon ./src/app.js",
     "start:test": "cross-env NODE_ENV=test nodemon ./src/app.js"
   },
@@ -17,7 +18,13 @@
   "author": "Efren García",
   "license": "ISC",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/passport": "^1.0.12",
+    "@types/passport-github2": "^1.2.5",
+    "@types/passport-jwt": "^3.0.9",
+    "@types/passport-local": "^1.0.35",
     "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "connect-mongo": "^5.0.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -36,11 +43,5 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "socket.io": "^4.7.1"
-  },
-  "devDependencies": {
-    "@types/passport": "^1.0.12",
-    "@types/passport-github2": "^1.2.5",
-    "@types/passport-jwt": "^3.0.9",
-    "@types/passport-local": "^1.0.35"
   }
 }
