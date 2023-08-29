@@ -187,7 +187,7 @@ class ViewsMongoRoutes {
         })
       } catch (error) {
         console.log(
-          "🚀 ~ file: viewsMongo.router.js:205 ~ viewsMongoRoutes ~ this.router.put ~ error:",
+          "🚀 ~ file: viewsMongo.router.js:190 ~ viewsMongoRoutes ~ this.router.put ~ error:",
           error
         );
       }
